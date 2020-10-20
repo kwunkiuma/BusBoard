@@ -8,7 +8,7 @@ namespace BusBoard.ConsoleApp
 { 
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var client = new RestClient("https://api.tfl.gov.uk/");
@@ -17,19 +17,18 @@ namespace BusBoard.ConsoleApp
             var stopCode = Console.ReadLine();
 
             var request = new RestRequest($"StopPoint/{stopCode}/Arrivals", DataFormat.Json);
-            var response = client.Get(request);
-            var jsonItems = JsonConvert.DeserializeObject<List<JsonItem>>(response.Content);
+            var response = client.Execute<List<BusEntry>>(request);
+            var busEntries = response.Data;
 
-            jsonItems.Sort();
-            jsonItems = jsonItems.GetRange(0, 5);
+            busEntries.Sort();
+            busEntries = busEntries.GetRange(0, 5);
 
-            foreach (var item in jsonItems)
+            foreach (var entry in busEntries)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(entry);
             }
 
             Console.ReadLine();
         }
-
     }
 }
