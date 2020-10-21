@@ -3,9 +3,9 @@ using System.Linq;
 using System.Net;
 using RestSharp;
 
-namespace BusBoard.ConsoleApp
+namespace BusBoard.Api
 {
-    class ApiHelper
+    public class ApiHelper
     {
         public static IEnumerable<T> ApiGet<T>(string baseUrl, string resource)
         {

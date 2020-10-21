@@ -1,11 +1,12 @@
-﻿namespace BusBoard.ConsoleApp
+﻿namespace BusBoard.Api
 {
     public class Result
     {
         public double longitude { get; set; }
         public double latitude { get; set; }
     }
-    class PostcodeEntry
+
+    public class PostcodeEntry
     {
         public Result result { get; set; }
     }

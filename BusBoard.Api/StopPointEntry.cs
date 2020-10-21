@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusBoard.ConsoleApp
+namespace BusBoard.Api
 {
     public class StopPoint
     {
@@ -10,7 +10,7 @@ namespace BusBoard.ConsoleApp
         public int distance { get; set; }
     }
 
-    class StopPointEntry
+    public class StopPointEntry
     {
         public List<StopPoint> stopPoints { get; set; }
     }

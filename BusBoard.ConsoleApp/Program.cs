@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static BusBoard.Api.ApiHelper;
 
 namespace BusBoard.ConsoleApp
 { 
@@ -17,15 +18,15 @@ namespace BusBoard.ConsoleApp
                     break;
                 }
 
-                var postcodeEntry = ApiHelper.GetPostcodeEntry(postcode);
+                var postcodeEntry = GetPostcodeEntry(postcode);
 
-                var nearestStopPoints = ApiHelper.GetNearestStopPoints(postcodeEntry).Take(2);
+                var nearestStopPoints = GetNearestStopPoints(postcodeEntry).Take(2);
 
                 foreach (var stopPoint in nearestStopPoints)
                 {
                     Console.WriteLine($"{stopPoint.commonName} ({stopPoint.distance}m away):");
 
-                    Console.WriteLine(ApiHelper.GetArrivingBuses(stopPoint));
+                    Console.WriteLine(GetArrivingBuses(stopPoint));
                 }
             }
         }
