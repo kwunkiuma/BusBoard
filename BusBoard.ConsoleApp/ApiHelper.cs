@@ -9,9 +9,9 @@ namespace BusBoard.ConsoleApp
         public static IEnumerable<T> ApiGet<T>(string baseUrl, string resource)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            var client = new RestClient(baseUrl);
-            var response = client.Execute<List<T>>(new RestRequest(resource, DataFormat.Json));
-            return response.Data;
+            return new RestClient(baseUrl)
+                .Execute<List<T>>(new RestRequest(resource, DataFormat.Json))
+                .Data;
         }
     }
 }
