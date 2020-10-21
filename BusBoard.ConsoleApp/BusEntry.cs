@@ -37,7 +37,7 @@ namespace BusBoard.ConsoleApp
         
         public override string ToString()
         {
-            return $"{expectedArrival}, {lineName}, {destinationName}";
+            return $"{expectedArrival.ToLocalTime().ToShortTimeString()} - [{lineName}] to {destinationName}";
         }
     }
 }
