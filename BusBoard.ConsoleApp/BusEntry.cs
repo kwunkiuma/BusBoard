@@ -12,7 +12,7 @@ namespace BusBoard.ConsoleApp
         public DateTime received { get; set; }
     }
 
-    public class BusEntry : IComparable<BusEntry>
+    public class BusEntry
     {
         public string id { get; set; }
         public int operationType { get; set; }
