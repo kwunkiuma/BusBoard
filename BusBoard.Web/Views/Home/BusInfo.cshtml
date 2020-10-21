@@ -6,5 +6,39 @@
 <h2>BusInfo</h2>
 
 <div class="row">
-    <p>You entered postcode @Model.PostCode</p>
+    @{
+        if (string.IsNullOrEmpty(Model.PostCode))
+        {
+            <p>You didn't enter a postcode!</p>
+            return;
+        }
+
+        <p>You entered postcode: @Model.PostCode</p>
+
+        var postcodeEntry = BusBoard.Api.ApiHelper.GetPostcodeEntry(Model.PostCode);
+
+        if (postcodeEntry.result == null)
+        {
+            <p>Postcode is invalid!</p>
+            return;
+        }
+
+        var nearestStopPoints = BusBoard.Api.ApiHelper.GetNearestStopPoints(postcodeEntry).Take(2);
+
+        if (!nearestStopPoints.Any())
+        {
+            <p>No stops nearby!</p>
+            return;
+        }
+
+        foreach (var stopPoint in nearestStopPoints)
+        {
+            var busEntry = BusBoard.Api.ApiHelper.GetArrivingBuses(stopPoint)
+                .Replace("\n", "<br />");
+            <p>
+                @stopPoint.commonName @stopPoint.distance m away: <br/>
+                @Html.Raw(HttpUtility.HtmlDecode(busEntry))
+            </p>
+        }
+    }
 </div>
