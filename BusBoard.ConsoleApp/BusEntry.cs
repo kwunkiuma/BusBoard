@@ -34,11 +34,6 @@ namespace BusBoard.ConsoleApp
         public DateTime timeToLive { get; set; }
         public string modeName { get; set; }
         public Timing timing { get; set; }
-
-        public int CompareTo(BusEntry other)
-        {
-            return expectedArrival.CompareTo(other.expectedArrival);
-        }
         
         public override string ToString()
         {

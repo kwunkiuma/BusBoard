@@ -18,15 +18,13 @@ namespace BusBoard.ConsoleApp
                 }
 
                 var busEntries = ApiHelper
-                    .ApiGet<BusEntry>("https://api.tfl.gov.uk/", $"StopPoint/{stopPoint}/Arrivals").ToList();
+                    .ApiGet<BusEntry>("https://api.tfl.gov.uk/", $"StopPoint/{stopPoint}/Arrivals");
 
-                busEntries = busEntries.OrderBy(busEntry => busEntry.expectedArrival).ToList();
-                busEntries = busEntries.GetRange(0, 5);
+                busEntries = busEntries.OrderBy(busEntry => busEntry.expectedArrival);
+                busEntries = busEntries.Take(5);
 
-                foreach (var entry in busEntries)
-                {
-                    Console.WriteLine(entry);
-                }
+                Console.WriteLine(string.Join("\n", busEntries));
+                
             }
         }
     }
