@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI.HtmlControls;
 
 namespace BusBoard.ConsoleApp
 { 
@@ -10,19 +10,23 @@ namespace BusBoard.ConsoleApp
         {
             while (true)
             {
-                Console.Write("Stop code: ");
-                var stopPoint = Console.ReadLine();
-                if (string.IsNullOrEmpty(stopPoint))
+                Console.Write("Postcode: ");
+                var postcode = Console.ReadLine();
+                if (string.IsNullOrEmpty(postcode))
                 {
                     break;
                 }
 
-                var busEntries = ApiHelper
-                    .ApiGet<BusEntry>("https://api.tfl.gov.uk/", $"StopPoint/{stopPoint}/Arrivals")
-                    .OrderBy(busEntry => busEntry.expectedArrival)
-                    .Take(5);
+                var postcodeEntry = ApiHelper.GetPostcodeEntry(postcode);
 
-                Console.WriteLine(string.Join("\n", busEntries));
+                var nearestStopPoints = ApiHelper.GetNearestStopPoints(postcodeEntry).Take(2);
+
+                foreach (var stopPoint in nearestStopPoints)
+                {
+                    Console.WriteLine($"{stopPoint.commonName} ({stopPoint.distance}m away):");
+
+                    Console.WriteLine(ApiHelper.GetArrivingBuses(stopPoint));
+                }
             }
         }
     }
