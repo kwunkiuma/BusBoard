@@ -20,17 +20,23 @@ namespace BusBoard.ConsoleApp
             return ApiGet<PostcodeEntry>("https://api.postcodes.io/", $"postcodes/{postcode}").First();
         }
 
-        public static IEnumerable<StopPointEntry.StopPoint> GetNearestStopPoints(PostcodeEntry postcodeEntry)
+        public static IEnumerable<StopPoint> GetNearestStopPoints(PostcodeEntry postcodeEntry)
         {
-            var resource =
-                $"StopPoint?stopTypes=NaptanPublicBusCoachTram&radius=400&useStopPointHierarchy=false&modes=bus&categories=none&returnLines=false&lat={postcodeEntry.result.latitude}&lon={postcodeEntry.result.longitude}";
+            var resource = $@"StopPoint
+                ?stopTypes=NaptanPublicBusCoachTram
+                &radius=400
+                &useStopPointHierarchy=false
+                &modes=bus&categories=none
+                &returnLines=false
+                &lat={postcodeEntry.result.latitude}
+                &lon={postcodeEntry.result.longitude}";
 
             return ApiGet<StopPointEntry>("https://api.tfl.gov.uk/", resource)
                 .First()
                 .stopPoints;
         }
 
-        public static string GetArrivingBusses(StopPointEntry.StopPoint stopPoint)
+        public static string GetArrivingBuses(StopPoint stopPoint)
         {
             var busEntries = ApiHelper
                 .ApiGet<BusEntry>("https://api.tfl.gov.uk/", $"StopPoint/{stopPoint.id}/Arrivals")
