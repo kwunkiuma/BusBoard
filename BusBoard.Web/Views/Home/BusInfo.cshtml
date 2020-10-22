@@ -12,7 +12,7 @@
     {
         foreach (var stop in Model.StopInfos)
         {
-            <h2>@stop.Station</h2>
+            <h4>@stop.Station</h4>
             foreach (var arrival in stop.Arrivals)
             {
                 <p>@arrival.ToString()</p>
