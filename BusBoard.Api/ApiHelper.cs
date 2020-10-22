@@ -36,7 +36,7 @@ namespace BusBoard.Api
                 .stopPoints;
         }
 
-        public static string GetArrivingBuses(StopPoint stopPoint)
+        public static string GetArrivalsString(StopPoint stopPoint)
         {
             var busEntries = ApiHelper
                 .ApiGet<BusEntry>("https://api.tfl.gov.uk/", $"StopPoint/{stopPoint.id}/Arrivals")
@@ -44,6 +44,13 @@ namespace BusBoard.Api
                 .Take(5);
 
             return string.Join("\n", busEntries);
+        }
+
+        public static IEnumerable<BusEntry> GetArrivalsList(StopPoint stopPoint)
+        {
+            return ApiGet<BusEntry>("https://api.tfl.gov.uk/", $"StopPoint/{stopPoint.id}/Arrivals")
+                .OrderBy(busEntry => busEntry.expectedArrival)
+                .Take(5);
         }
     }
 }
