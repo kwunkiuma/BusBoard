@@ -6,23 +6,25 @@ namespace BusBoard.Web.ViewModels
 {
     public class BusInfo
     {
-        public string PostCode { get; set; }
-        public string ConfirmationMessage { get; }
+        public string ConfirmationMessage { get; set; }
         public List<StopInfo> StopInfos { get; }
 
-        public BusInfo(string postCode)
+        public BusInfo(string postcode)
         {
             StopInfos = new List<StopInfo>();
 
-            PostCode = postCode;
+            PopulateStopInfos(postcode);
+        }
 
-            if (string.IsNullOrEmpty(postCode))
+        private void PopulateStopInfos(string postcode)
+        {
+            if (string.IsNullOrEmpty(postcode))
             {
                 ConfirmationMessage = "You didn't enter a postcode!";
                 return;
             }
 
-            var postcodeEntry = ApiHelper.GetPostcodeEntry(postCode);
+            var postcodeEntry = ApiHelper.GetPostcodeEntry(postcode);
 
             if (postcodeEntry.result == null)
             {
@@ -30,7 +32,7 @@ namespace BusBoard.Web.ViewModels
                 return;
             }
 
-            var nearestStopPoints = ApiHelper.GetNearestStopPoints(postcodeEntry).Take(2);
+            var nearestStopPoints = ApiHelper.GetNearestStopPoints(postcodeEntry).Take(2).ToList();
 
             if (!nearestStopPoints.Any())
             {
@@ -38,9 +40,12 @@ namespace BusBoard.Web.ViewModels
                 return;
             }
 
-            ConfirmationMessage = $"You entered postcode: {postCode}";
+            ConfirmationMessage = $"You entered postcode: {postcode}";
 
-            foreach (var stopPoint in nearestStopPoints) StopInfos.Add(new StopInfo(stopPoint));
+            foreach (var stopPoint in nearestStopPoints)
+            {
+                StopInfos.Add(new StopInfo(stopPoint));
+            }
         }
     }
 }
