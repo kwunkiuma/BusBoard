@@ -1,13 +1,49 @@
-﻿namespace BusBoard.Web.ViewModels
+﻿using System.Collections.Generic;
+using System.Linq;
+using BusBoard.Api;
+
+namespace BusBoard.Web.ViewModels
 {
-  public class BusInfo
-  {
-    public BusInfo(string postCode)
+    public class BusInfo
     {
-      PostCode = postCode;
+        public string ConfirmationMessage { get; set; }
+        public List<StopInfo> StopInfos { get; } = new List<StopInfo>();
+
+        public BusInfo(string postcode)
+        {
+            PopulateStopInfos(postcode);
+        }
+
+        private void PopulateStopInfos(string postcode)
+        {
+            if (string.IsNullOrEmpty(postcode))
+            {
+                ConfirmationMessage = "You didn't enter a postcode!";
+                return;
+            }
+
+            var postcodeEntry = ApiHelper.GetPostcodeEntry(postcode);
+
+            if (postcodeEntry.result == null)
+            {
+                ConfirmationMessage = "Postcode is invalid!";
+                return;
+            }
+
+            var nearestStopPoints = ApiHelper.GetNearestStopPoints(postcodeEntry).Take(2).ToList();
+
+            if (!nearestStopPoints.Any())
+            {
+                ConfirmationMessage = "No stops nearby!";
+                return;
+            }
+
+            ConfirmationMessage = $"You entered postcode: {postcode}";
+
+            foreach (var stopPoint in nearestStopPoints)
+            {
+                StopInfos.Add(new StopInfo(stopPoint));
+            }
+        }
     }
-
-    public string PostCode { get; set; }
-
-  }
 }

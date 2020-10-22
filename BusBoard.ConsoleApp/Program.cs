@@ -26,7 +26,7 @@ namespace BusBoard.ConsoleApp
                 {
                     Console.WriteLine($"{stopPoint.commonName} ({stopPoint.distance}m away):");
 
-                    Console.WriteLine(GetArrivingBuses(stopPoint));
+                    Console.WriteLine(GetArrivalsString(stopPoint));
                 }
             }
         }

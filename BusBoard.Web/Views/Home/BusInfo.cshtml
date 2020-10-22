@@ -1,10 +1,21 @@
 ﻿@model BusBoard.Web.ViewModels.BusInfo
 @{
-  ViewBag.Title = "Bus Information";
+    ViewBag.Title = "Bus Information";
 }
 
 <h2>BusInfo</h2>
 
-<div class="row">
-    <p>You entered postcode @Model.PostCode</p>
-</div>
+<p>@Model.ConfirmationMessage</p>
+
+@if (Model.StopInfos.Any())
+{
+    <h3>Closest stops</h3>
+    foreach (var stop in Model.StopInfos)
+    {
+        <h4>@stop.Station</h4>
+        foreach (var arrival in stop.Arrivals)
+        {
+            <p>@arrival.ToString()</p>
+        }
+    }
+}

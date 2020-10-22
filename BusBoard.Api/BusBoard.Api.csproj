@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ApiHelper.cs" />
     <Compile Include="BusEntry.cs" />
+    <Compile Include="StopInfo.cs" />
     <Compile Include="PostcodeEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StopPointEntry.cs" />
