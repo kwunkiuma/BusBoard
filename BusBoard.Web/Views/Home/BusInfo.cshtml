@@ -5,18 +5,17 @@
 
 <h2>BusInfo</h2>
 
-<div class="row">
-    <p>@Model.ConfirmationMessage</p>
+<p>@Model.ConfirmationMessage</p>
 
-    @if (Model.StopInfos.Any())
+@if (Model.StopInfos.Any())
+{
+    <h3>Closest stops</h3>
+    foreach (var stop in Model.StopInfos)
     {
-        foreach (var stop in Model.StopInfos)
+        <h4>@stop.Station</h4>
+        foreach (var arrival in stop.Arrivals)
         {
-            <h4>@stop.Station</h4>
-            foreach (var arrival in stop.Arrivals)
-            {
-                <p>@arrival.ToString()</p>
-            }
+            <p>@arrival.ToString()</p>
         }
     }
-</div>
+}
