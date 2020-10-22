@@ -4,18 +4,6 @@ using BusBoard.Api;
 
 namespace BusBoard.Web.ViewModels
 {
-    public class StopInfo
-    {
-        public string Station { get; }
-        public IEnumerable<BusEntry> Arrivals { get; }
-
-        public StopInfo(StopPoint stopPoint)
-        {
-            Station = stopPoint.commonName;
-            Arrivals = ApiHelper.GetArrivalsList(stopPoint);
-        }
-    }
-
     public class BusInfo
     {
         public BusInfo(string postCode)
