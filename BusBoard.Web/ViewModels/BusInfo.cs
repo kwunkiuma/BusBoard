@@ -7,12 +7,10 @@ namespace BusBoard.Web.ViewModels
     public class BusInfo
     {
         public string ConfirmationMessage { get; set; }
-        public List<StopInfo> StopInfos { get; }
+        public List<StopInfo> StopInfos { get; } = new List<StopInfo>();
 
         public BusInfo(string postcode)
         {
-            StopInfos = new List<StopInfo>();
-
             PopulateStopInfos(postcode);
         }
 
