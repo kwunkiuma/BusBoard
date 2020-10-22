@@ -6,6 +6,10 @@ namespace BusBoard.Web.ViewModels
 {
     public class BusInfo
     {
+        public string PostCode { get; set; }
+        public string ConfirmationMessage { get; }
+        public List<StopInfo> StopInfos { get; }
+
         public BusInfo(string postCode)
         {
             StopInfos = new List<StopInfo>();
@@ -38,9 +42,5 @@ namespace BusBoard.Web.ViewModels
 
             foreach (var stopPoint in nearestStopPoints) StopInfos.Add(new StopInfo(stopPoint));
         }
-
-        public string PostCode { get; set; }
-        public string ConfirmationMessage { get; }
-        public List<StopInfo> StopInfos { get; }
     }
 }
